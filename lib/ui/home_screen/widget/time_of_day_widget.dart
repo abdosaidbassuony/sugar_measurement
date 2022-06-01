@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sugar_measurement/bloc/home_bloc.dart';
 
 class TimeOfDayWidget extends StatefulWidget {
   const TimeOfDayWidget({Key? key}) : super(key: key);
@@ -11,6 +13,15 @@ class _TimeOfDayWidgetState extends State<TimeOfDayWidget> {
   int? hour = TimeOfDay.now().hour;
   int? minute = TimeOfDay.now().minute;
   String? timePeriod = TimeOfDay.now().period.name;
+  HomeBloc? homeBloc;
+
+  @override
+  void initState() {
+    homeBloc = BlocProvider.of<HomeBloc>(context);
+
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +37,12 @@ class _TimeOfDayWidgetState extends State<TimeOfDayWidget> {
               hour = timeOfDay.hour;
               minute = timeOfDay.minute;
               timePeriod = timeOfDay.period.name;
+              homeBloc!.alarmTime =
+                  "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
+              homeBloc!.hour = hour;
+              homeBloc!.minutes = minute;
+              homeBloc!.period = timePeriod;
+              homeBloc!.periodId = timeOfDay.period.index;
             });
           }
         });

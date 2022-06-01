@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sugar_measurement/ui/register_screen/screen/emergency_numbers_screen.dart';
 import 'package:sugar_measurement/utils/custom_button_widget.dart';
+
+import '../../../bloc/register_bloc.dart';
 
 class ChooseSugarTypeBodyWidget extends StatefulWidget {
   const ChooseSugarTypeBodyWidget({Key? key}) : super(key: key);
@@ -16,7 +19,11 @@ class _ChooseSugarTypeBodyWidgetState extends State<ChooseSugarTypeBodyWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+          elevation: 10,
+          centerTitle: true,
+          title: const Text("Sucrose"),
+          backgroundColor: Colors.white),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
@@ -35,6 +42,7 @@ class _ChooseSugarTypeBodyWidgetState extends State<ChooseSugarTypeBodyWidget> {
                     setState(() {
                       _value = value;
                     });
+                    BlocProvider.of<AuthBloc>(context).sugarType = value;
                   },
                   groupValue: _value,
                 ),
@@ -49,6 +57,7 @@ class _ChooseSugarTypeBodyWidgetState extends State<ChooseSugarTypeBodyWidget> {
                     setState(() {
                       _value = value;
                     });
+                    BlocProvider.of<AuthBloc>(context).sugarType = value;
                     print("object $value");
                   },
                   groupValue: _value,

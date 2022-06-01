@@ -13,6 +13,6 @@ class EmergencyNumbersScreen extends BaseStatefulWidget {
 class _EmergencyNumbersScreenState extends BaseState<EmergencyNumbersScreen> {
   @override
   Widget baseBuild(BuildContext context) {
-    return  EmergencyNumbersBodyWidget();
+    return  const EmergencyNumbersBodyWidget();
   }
 }

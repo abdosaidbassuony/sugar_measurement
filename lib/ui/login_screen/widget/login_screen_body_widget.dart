@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sugar_measurement/bloc/register_bloc.dart';
+import 'package:sugar_measurement/data/shared_prefs.dart';
 import 'package:sugar_measurement/ui/login_screen/widget/register_text_widget.dart';
 import 'package:sugar_measurement/ui/login_screen/widget/remember_me_check_box_widget.dart';
 import 'package:sugar_measurement/utils/custom_button_widget.dart';
@@ -24,7 +25,11 @@ class _LoginScreenBodyWidgetState extends State<LoginScreenBodyWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+          elevation: 10,
+          centerTitle: true,
+          title: const Text("Sucrose"),
+          backgroundColor: Colors.white),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -35,11 +40,11 @@ class _LoginScreenBodyWidgetState extends State<LoginScreenBodyWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 100),
-                child: Placeholder(
-                  fallbackHeight: 50,
-                ),
+              Image.asset(
+                "images/logo.jpeg",
+                height: 100,
+                fit: BoxFit.fill,
+                width: 100,
               ),
               const SizedBox(height: 50),
               TextFormField(
@@ -53,6 +58,8 @@ class _LoginScreenBodyWidgetState extends State<LoginScreenBodyWidget> {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
                 onChanged: (value) {
                   password = value;
                 },
@@ -71,8 +78,9 @@ class _LoginScreenBodyWidgetState extends State<LoginScreenBodyWidget> {
                   await BlocProvider.of<AuthBloc>(context)
                       .login(email: userName, password: password)
                       .then((value) {
-                        print(" value is >>> ${value}");
+                    print(" value is >>> ${value}");
                     if (value.isNotEmpty) {
+                      UserSingleton.setUser(value.first);
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(

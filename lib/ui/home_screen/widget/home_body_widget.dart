@@ -13,9 +13,10 @@ class HomeBodyWidget extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
-        title: const Text("Home", style: TextStyle(color: Colors.white)),
-        elevation: 5,
-      ),
+          elevation: 10,
+          centerTitle: true,
+          title: const Text("Sucrose"),
+          backgroundColor: Colors.white),
       body: const AlarmListWidget(),
     );
   }

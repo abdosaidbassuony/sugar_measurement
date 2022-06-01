@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sugar_measurement/data/database.dart';
 import 'package:sugar_measurement/utils/resources/color_scheme.dart';
 
 class AlarmItemWidget extends StatefulWidget {
-  const AlarmItemWidget({Key? key}) : super(key: key);
+  final AlarmData? alarmData;
+
+  const AlarmItemWidget({Key? key, this.alarmData}) : super(key: key);
 
   @override
   State<AlarmItemWidget> createState() => _AlarmItemWidgetState();
@@ -29,20 +32,21 @@ class _AlarmItemWidgetState extends State<AlarmItemWidget> {
                 children: [
                   Row(
                     children: [
-                      const Text("05:25 ",
-                          style: TextStyle(
+                      Text(widget.alarmData!.alarmTime!,
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 30)),
                       Container(
                           margin: const EdgeInsets.only(bottom: 30),
-                          child: const Text("AM"))
+                          child: Text(widget.alarmData!.period!))
                     ],
                   ),
                   const SizedBox(
                     height: 8,
                   ),
-                  const Text(
-                    "Sun",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  Text(
+                    widget.alarmData!.repeatedDays!,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
               ),

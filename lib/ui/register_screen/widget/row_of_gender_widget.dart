@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sugar_measurement/data/user_model.dart';
+
+import '../../../bloc/register_bloc.dart';
 
 class RowOfGenderWidget extends StatefulWidget {
   const RowOfGenderWidget({Key? key}) : super(key: key);
@@ -8,6 +12,8 @@ class RowOfGenderWidget extends StatefulWidget {
 }
 
 class _RowOfGenderWidgetState extends State<RowOfGenderWidget> {
+  GenderType genderType = GenderType.male;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -16,20 +22,30 @@ class _RowOfGenderWidgetState extends State<RowOfGenderWidget> {
         const Text("Gender:"),
         Row(
           children: [
-            Radio(
-              value: 1,
-              onChanged: (value) {},
-              groupValue: 1,
+            Radio<GenderType>(
+              value: GenderType.male,
+              onChanged: (value) {
+                setState(() {
+                  genderType = value!;
+                });
+                BlocProvider.of<AuthBloc>(context).genderType = value;
+              },
+              groupValue: genderType,
             ),
             const Text("Male")
           ],
         ),
         Row(
           children: [
-            Radio(
-              value: 0,
-              onChanged: (value) {},
-              groupValue: 1,
+            Radio<GenderType>(
+              value: GenderType.female,
+              onChanged: (value) {
+                setState(() {
+                  genderType = value!;
+                });
+                BlocProvider.of<AuthBloc>(context).genderType = value;
+              },
+              groupValue: genderType,
             ),
             const Text("Female")
           ],

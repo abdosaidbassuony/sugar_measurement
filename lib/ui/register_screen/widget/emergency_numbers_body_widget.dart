@@ -8,13 +8,19 @@ import 'package:sugar_measurement/utils/custom_button_widget.dart';
 import 'package:sugar_measurement/utils/resources/color_scheme.dart';
 import 'package:sugar_measurement/utils/theme/decoration_border.dart';
 
+import '../../../data/shared_prefs.dart';
+
 class EmergencyNumbersBodyWidget extends StatelessWidget {
   const EmergencyNumbersBodyWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+          elevation: 10,
+          centerTitle: true,
+          title: const Text("Sucrose"),
+          backgroundColor: Colors.white),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 16),
@@ -28,18 +34,24 @@ class EmergencyNumbersBodyWidget extends StatelessWidget {
               )),
               const SizedBox(height: 50),
               TextFormField(
+                  onChanged: (value) =>
+                      BlocProvider.of<AuthBloc>(context).mobileNumber1 = value,
                   decoration: decorationBorder(
                       hintText: "Phone Number 1",
                       borderColor: ColorSchema.lightGrayColor,
                       hintSize: 14)),
               const SizedBox(height: 16),
               TextFormField(
+                  onChanged: (value) =>
+                      BlocProvider.of<AuthBloc>(context).mobileNumber2 = value,
                   decoration: decorationBorder(
                       hintText: "Phone Number 2",
                       borderColor: ColorSchema.lightGrayColor,
                       hintSize: 14)),
               const SizedBox(height: 16),
               TextFormField(
+                  onChanged: (value) =>
+                      BlocProvider.of<AuthBloc>(context).mobileNumber3 = value,
                   decoration: decorationBorder(
                       hintText: "Phone Number 3",
                       borderColor: ColorSchema.lightGrayColor,
@@ -55,16 +67,21 @@ class EmergencyNumbersBodyWidget extends StatelessWidget {
                     },
                     yesButton: () async {
                       await BlocProvider.of<AuthBloc>(context)
-                          .registerNewUser(
-                              weight: 100,
-                              age: 25,
-                              password: "123",
-                              genderType: GenderType.male,
-                              mobileNumber1: "010",
-                              sugarType: 0,
-                              userEmail: "test@test",
-                              username: "test")
-                          .then((value) {
+                          .registerNewUser()
+                          .then((value) async {
+                        await BlocProvider.of<AuthBloc>(context)
+                            .login(
+                                email: BlocProvider.of<AuthBloc>(context)
+                                    .userEmail,
+                                password:
+                                    BlocProvider.of<AuthBloc>(context).password)
+                            .then((value) {
+                          if (value.isNotEmpty) {
+                            UserSingleton.setUser(value.first);
+
+                            print("UserSingleton ${UserSingleton().getUser}");
+                          }
+                        });
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(

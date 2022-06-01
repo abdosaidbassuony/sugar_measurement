@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:drift/drift.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sugar_measurement/data/database.dart';
@@ -7,19 +9,18 @@ class AuthBloc extends Bloc {
   final AppDatabase _appDatabase = AppDatabase();
 
   AuthBloc(initialState) : super(initialState);
+  String? username;
+  String? password;
+  String? userEmail;
+  String? mobileNumber1;
+  String? mobileNumber2;
+  String? mobileNumber3;
+  int? age;
+  int? sugarType = 1;
+  double? weight;
+  GenderType? genderType =GenderType.male;
 
-  Future<void> registerNewUser({
-    String? username,
-    String? password,
-    String? userEmail,
-    int? age,
-    int? sugarType,
-    double? weight,
-    GenderType? genderType,
-    String? mobileNumber1,
-    String? mobileNumber2,
-    String? mobileNumber3,
-  }) async {
+  Future<void> registerNewUser() async {
     await _appDatabase.insertUser(UserCompanion(
       userName: Value(username!),
       password: Value(password!),
