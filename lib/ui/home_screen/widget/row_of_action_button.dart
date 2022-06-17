@@ -22,7 +22,10 @@ class RowOfActionButton extends StatelessWidget {
                 .then((value) => BlocProvider.of<HomeBloc>(context).getAlarm());
             BlocProvider.of<HomeBloc>(context).repeatedDaysList.clear();
             NotificationService().showNotification(
-                1, "Notification_title.text", "Notification_descrp.text");
+                1,
+                "Sucrose",
+                "It's Time to check !!",
+                BlocProvider.of<HomeBloc>(context).timeOfDay!);
             Navigator.pop(context);
           },
         )),

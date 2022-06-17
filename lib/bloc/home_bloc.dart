@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../data/database.dart';
 import '../data/shared_prefs.dart';
@@ -17,7 +18,15 @@ class HomeBloc extends Bloc {
 
   Function(List<AlarmData>) get getListOfAlarm => _alarmListController.sink.add;
 
+  final _onNotificationClick = BehaviorSubject<String?>();
+
+  Stream<String?> get onNotificationClickStream => _onNotificationClick.stream;
+
+  Function(String?) get onNotificationClickEvent =>
+      _onNotificationClick.sink.add;
+
   HomeBloc(initialState) : super(initialState);
+  TimeOfDay? timeOfDay = TimeOfDay.now();
 
   String? alarmTime =
       "${TimeOfDay.now().hour.toString().padLeft(2, '0')}:${TimeOfDay.now().minute.toString().padLeft(2, '0')}";

@@ -27,7 +27,7 @@ abstract class BaseState<W extends BaseStatefulWidget> extends State<W>
 
   Widget baseWidget() {
     return Material(
-      color: widget.materialColor,
+      color: Colors.white,
       child: Stack(
         fit: StackFit.expand,
         children: [baseBuild(context), loadingManagerWidget()],

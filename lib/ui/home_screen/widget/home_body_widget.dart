@@ -8,6 +8,7 @@ class HomeBodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.w,
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addNewAlarm(context),
         child: const Icon(Icons.add),

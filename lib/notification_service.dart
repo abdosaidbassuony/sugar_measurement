@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:rxdart/rxdart.dart';
 
 class NotificationService {
+  static final onNotificationClick = BehaviorSubject<String?>();
+
   static final NotificationService _notificationService =
       NotificationService._internal();
 
@@ -34,15 +37,32 @@ class NotificationService {
             android: initializationSettingsAndroid,
             iOS: initializationSettingsIOS);
     // the initialization settings are initialized after they are setted
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (payload) =>
+            onNotificationClick.sink.add(payload));
   }
 
-  Future<void> showNotification(int id, String title, String body) async {
-    await flutterLocalNotificationsPlugin.schedule(
+  Future<void> showNotification(
+      int id, String title, String body, TimeOfDay timeOfDay) async {
+    tz.initializeTimeZones();
+    final now = DateTime.now();
+    print(DateTime(
+        now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute));
+    print(now);
+    await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
-      body,
-      DateTime(2022),
+      DateTime(now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute)
+          .toString(),
+      tz.TZDateTime.from(
+          DateTime(
+            now.year,
+            now.month,
+            now.day,
+            timeOfDay.hour,
+            timeOfDay.minute + 1,
+          ),
+          tz.local),
       const NotificationDetails(
         // Android details
         android: AndroidNotificationDetails('main_channel', 'Main Channel',
@@ -58,9 +78,13 @@ class NotificationService {
         ),
       ),
       // Type of time interpretation
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.wallClockTime,
       androidAllowWhileIdle:
-          true, // To show notification even when the app is closed
+          true, //To show notification even when the app is closed
     );
+    print(DateTime(
+        now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute));
     // await flutterLocalNotificationsPlugin.zonedSchedule(
     //   id,
     //   title,

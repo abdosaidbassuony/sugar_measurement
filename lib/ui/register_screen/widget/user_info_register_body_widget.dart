@@ -29,7 +29,16 @@ class UserInfoRegisterBodyWidget extends StatelessWidget {
                 onChanged: (value) =>
                     BlocProvider.of<AuthBloc>(context).username = value,
                 decoration: decorationBorder(
-                    hintText: "User Name",
+                    hintText: "First Name",
+                    borderColor: ColorSchema.lightGrayColor,
+                    hintSize: 14),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              TextFormField(
+                decoration: decorationBorder(
+                    hintText: "Last Name",
                     borderColor: ColorSchema.lightGrayColor,
                     hintSize: 14),
               ),

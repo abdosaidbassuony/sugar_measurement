@@ -18,7 +18,7 @@ class _AlarmListWidgetState extends State<AlarmListWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 30),
       child: StreamBuilder<List<AlarmData>>(
-          initialData: [],
+          initialData: const [],
           stream: BlocProvider.of<HomeBloc>(context).listAlarmStream,
           builder: (context, snapshot) {
             return ListView.builder(

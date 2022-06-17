@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sugar_measurement/bloc/home_bloc.dart';
 
 class TimeOfDayWidget extends StatefulWidget {
@@ -33,6 +34,7 @@ class _TimeOfDayWidgetState extends State<TimeOfDayWidget> {
             .then((value) {
           if (value != null) {
             TimeOfDay timeOfDay = value;
+            homeBloc!.timeOfDay =TimeOfDay.now();
             setState(() {
               hour = timeOfDay.hour;
               minute = timeOfDay.minute;
@@ -43,6 +45,7 @@ class _TimeOfDayWidgetState extends State<TimeOfDayWidget> {
               homeBloc!.minutes = minute;
               homeBloc!.period = timePeriod;
               homeBloc!.periodId = timeOfDay.period.index;
+              homeBloc!.timeOfDay = timeOfDay;
             });
           }
         });

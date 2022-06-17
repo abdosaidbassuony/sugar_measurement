@@ -26,10 +26,11 @@ class _LoginScreenBodyWidgetState extends State<LoginScreenBodyWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 10,
+          elevation: 1,
           centerTitle: true,
           title: const Text("Sucrose"),
-          backgroundColor: Colors.white),
+          backgroundColor: Colors.white
+          ),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -42,6 +43,9 @@ class _LoginScreenBodyWidgetState extends State<LoginScreenBodyWidget> {
               const SizedBox(height: 50),
               Image.asset(
                 "images/logo.jpeg",
+                // color: Colors.grey.withOpacity(0.2),
+                // opacity: ,
+                colorBlendMode: BlendMode.hardLight,
                 height: 100,
                 fit: BoxFit.fill,
                 width: 100,
