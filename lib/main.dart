@@ -39,6 +39,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -57,8 +59,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
-  rebaseTest() {}
 }
-
-mainTest() {}
